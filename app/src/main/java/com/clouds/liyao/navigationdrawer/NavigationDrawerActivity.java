@@ -59,11 +59,12 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
         // reference: http://stackoverflow.com/questions/29339818/actionbardrawertoggle-cannot-be-applied-to-android-support-v7-widget-toolbar
         mDrawerToggle = new ActionBarDrawerToggle(
-                this,
-                mDrawerLayout,
-                toolbar,
-                R.string.drawer_open,
-                R.string.drawer_close) {
+                this,                 /* host Activity */
+                mDrawerLayout,        /* DrawerLayout object */
+                toolbar,              /* toolbar */
+                R.string.drawer_open, /* "open drawer" description */
+                R.string.drawer_close /* "close drawer" description */
+        ) {
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
@@ -82,6 +83,16 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred
+        mDrawerToggle.syncState();
     }
 
     /* Called whenever we call invalidateOptionsMenu() */
@@ -102,13 +113,9 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
