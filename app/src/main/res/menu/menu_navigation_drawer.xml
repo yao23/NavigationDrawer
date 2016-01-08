@@ -4,7 +4,7 @@
     tools:context="com.clouds.liyao.navigationdrawer.NavigationDrawerActivity">
     <item
         android:id="@+id/action_websearch"
-        android:orderInCategory="100"
+        android:icon="@drawable/action_search"
         android:title="@string/action_websearch"
         app:showAsAction="ifRoom|withText" />
 </menu>
